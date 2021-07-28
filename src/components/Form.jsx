@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  selection: {
+    '&:hover': {
+      backgroundColor: '#badcd0',
+    },
+  },
   button: {
     marginTop: theme.spacing(2),
     background: '#1E3932',
@@ -54,7 +59,7 @@ const Form = () => {
 
   return (
     <Container className={classes.root}>
-      <p>If you had good sevice you can vote for your barrista here!</p>
+      <p>If you had good sevice, you can vote for your barrista here!</p>
       <FormControl className={classes.formControl}>
         <InputLabel shrink id="name-label">
           Name
@@ -70,7 +75,9 @@ const Form = () => {
             <em>-- select one --</em>
           </MenuItem>
           {names.map((name) => (
-            <MenuItem value={name.toLowerCase()}>{name}</MenuItem>
+            <MenuItem value={name.toLowerCase()} className={classes.selection}>
+              {name}
+            </MenuItem>
           ))}
         </Select>
         <Button
@@ -78,7 +85,7 @@ const Form = () => {
           disabled={name === '' ? true : false}
           className={classes.button}
           onClick={handleVote}>
-          Vote
+          Vote Now!
         </Button>
       </FormControl>
     </Container>
