@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 
-function App() {
+import TopBar from './components/TopBar';
+import Form from './components/Form';
+import Thanks from './components/Thanks';
+import Footer from './components/Footer';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+}));
+
+const App = () => {
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <TopBar />
+      <Router>
+        <Route exact path="/">
+          <Form />
+        </Route>
+        <Route path="/voted">
+          <Thanks />
+        </Route>
+      </Router>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
