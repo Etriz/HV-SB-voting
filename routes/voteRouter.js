@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   res.send({ api: 'up' });
 });
 router.get('/votes', VoteController.getAll);
-// router.post('/votes', VoteController);
-// router.put('/votes/:id', VoteController);
+router.get('/votes/:name', VoteController.getByName);
+router.put('/votes/:name', VoteController.updateRating);
 
 module.exports = router;

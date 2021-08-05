@@ -10,6 +10,6 @@ const VoteSchema = new mongoose.Schema({
   },
 });
 
-const voteModel = mongoose.model('VoteModel', VoteSchema, 'HB_SB');
+const voteModel = mongoose.model('VoteModel', VoteSchema, 'HV-SB');
 
 module.exports = voteModel;
