@@ -9,6 +9,6 @@ router.get('/', (req, res) => {
 });
 router.get('/votes', VoteController.getAll);
 router.get('/votes/:name', VoteController.getByName);
-router.put('/votes/:name', VoteController.updateRating);
+router.put('/votes/', VoteController.updateRating);
 
 module.exports = router;
