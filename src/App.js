@@ -24,7 +24,7 @@ const App = () => {
         <Route exact path="/">
           <Form />
         </Route>
-        <Route path="/voted">
+        <Route path="/thanks">
           <Thanks />
         </Route>
       </Router>

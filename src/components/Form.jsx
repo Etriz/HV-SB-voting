@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
@@ -76,10 +76,11 @@ const Form = () => {
     setFormState({ ...formState, rating: event.target.value });
     console.log(formState.rating);
   };
-  const handleVote = () => {
+  const handleVote = async () => {
     if (formState.name !== '' && formState.rating !== '') {
+      await axios.put(`https://hv-sb-voting.herokuapp.com/api/votes`, formState);
       setFormState(EMPTY_FORM);
-      history.push('/voted');
+      history.push('/thanks');
     }
   };
 
