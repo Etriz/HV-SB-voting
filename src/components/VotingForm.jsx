@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = () => {
+const VotingForm = () => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -153,4 +153,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default VotingForm;
