@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -67,7 +67,17 @@ const VotingForm = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  const [message, setMessage] = useState('set message here');
   const [formState, setFormState] = useState(EMPTY_FORM);
+
+  useEffect(() => {
+    const fetchMessage = async () => {
+      // const newMessage = await axios.get('');
+      // setMessage(newMessage);
+    };
+    fetchMessage();
+  }, []);
+
   const handleNameChange = (event) => {
     setFormState({ ...formState, name: event.target.value });
     console.log(formState.name);
@@ -86,11 +96,8 @@ const VotingForm = () => {
 
   return (
     <Container className={classes.root}>
-      <p>If you had good sevice, you can vote for your barrista here!</p>
+      <p>{message}</p>
       <FormControl className={classes.formControl}>
-        {/* <InputLabel shrink id="name-label">
-          Name
-        </InputLabel> */}
         <FormLabel component="legend" className={classes.radioLabel}>
           Name
         </FormLabel>

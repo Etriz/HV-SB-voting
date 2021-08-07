@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// import VotingForm from './VotingForm';
+import InfoForm from './InfoForm';
+import AddRemoveForm from './AddRemoveForm';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +10,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,24 +38,75 @@ const useStyles = makeStyles((theme) => ({
   indicator: {
     backgroundColor: '#BADCD0',
   },
+  person: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 2fr',
+    borderBottom: '1px solid black',
+  },
+  name: {
+    alignSelf: 'center',
+  },
+  ratingsGroup: {
+    padding: theme.spacing(1),
+    borderLeft: '1px solid black',
+    margin: theme.spacing(0, 2),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    background: '#1E3932',
+    color: 'white',
+    border: '1px solid #1E3932',
+    '&:hover': {
+      background: 'white',
+      color: '#1E3932',
+    },
+    '&:disabled': {
+      border: '1px solid transparent',
+    },
+  },
 }));
 
 const Dashboard = () => {
   const classes = useStyles();
   const [tabIndex, setTabIndex] = useState(0);
-  const [allData, setAllData] = useState();
+  const [allData, setAllData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get('https://hv-sb-voting.herokuapp.com/api/votes');
       const allVotes = await response.data.data;
       const values = await allVotes.values();
-      console.log('values', [...values]);
+      // console.log('values', [...values]);
       setAllData([...values]);
     };
     fetchData();
   }, []);
+  const capitalizeName = (name) => {
+    return name[0].toUpperCase() + name.slice(1);
+  };
 
+  const displayAllData = () => {
+    return (
+      <>
+        {allData.map((item) => (
+          <div key={item.name} className={classes.person}>
+            <div className={classes.name}>{capitalizeName(item.name)}</div>
+            <div className={classes.ratingsGroup}>
+              {Object.entries(item.rating).map((letter) => {
+                return <span key={letter}>{`${letter[0]}: ${letter[1]}`}</span>;
+              })}
+            </div>
+          </div>
+        ))}
+        <Button variant="contained" className={classes.button}>
+          !! RESET ALL !!
+        </Button>
+      </>
+    );
+  };
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
   };
@@ -63,21 +116,18 @@ const Dashboard = () => {
       <AppBar position="static" className={classes.bar}>
         <Tabs value={tabIndex} onChange={handleChange} classes={{ indicator: classes.indicator }}>
           <Tab label="View All" />
-          <Tab label="View By Name" />
           <Tab label="Add/Remove" />
+          <Tab label="Edit Info" />
         </Tabs>
       </AppBar>
       <TabPanel value={tabIndex} index={0}>
-        {/* <VotingForm /> */}
-        {allData.map((item) => (
-          <p>item.name</p>
-        ))}
+        {displayAllData}
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
-        Item Two
+        <AddRemoveForm />
       </TabPanel>
       <TabPanel value={tabIndex} index={2}>
-        Item Three
+        <InfoForm />
       </TabPanel>
     </div>
   );
