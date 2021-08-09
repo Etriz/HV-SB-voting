@@ -11,4 +11,11 @@ router.get('/votes', VoteController.getAll);
 router.get('/votes/:name', VoteController.getByName);
 router.put('/votes/', VoteController.updateRating);
 
+router.get('/names/', VoteController.getAllNames);
+router.post('/names/', VoteController.addName);
+router.delete('/names/', VoteController.deleteName);
+
+router.get('/message/', VoteController.getMessage);
+router.put('/message/', VoteController.updateMessage);
+
 module.exports = router;
