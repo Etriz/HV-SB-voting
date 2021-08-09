@@ -78,15 +78,19 @@ const Dashboard = () => {
     const fetchData = async () => {
       const response = await axios.get('https://hv-sb-voting.herokuapp.com/api/votes');
       const allVotes = await response.data.data;
-      const values = await allVotes.values();
+      const values = await [...allVotes.values()];
+      const filterValues = values.filter((person) => person.name !== 'message');
       // console.log('values', [...values]);
-      setAllData([...values]);
+      setAllData(filterValues);
     };
     fetchData();
   }, []);
   const capitalizeName = (name) => {
     return name[0].toUpperCase() + name.slice(1);
   };
+  // const resetAll = async () => {
+  //   await axios.put(`https://hv-sb-voting.herokuapp.com/api/votes`, 'formState');
+  // };
 
   const displayAllData = () => {
     return (

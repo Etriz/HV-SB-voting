@@ -13,7 +13,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Button from '@material-ui/core/Button';
 
-const names = ['Aida', 'Azzy', 'Cara', 'Jakob', 'Rebecca', 'Ryan'];
 const EMPTY_FORM = { name: '', rating: '' };
 
 const useStyles = makeStyles((theme) => ({
@@ -69,22 +68,31 @@ const VotingForm = () => {
 
   const [message, setMessage] = useState('set message here');
   const [formState, setFormState] = useState(EMPTY_FORM);
+  const [allNames, setAllNames] = useState([]);
 
   useEffect(() => {
     const fetchMessage = async () => {
-      // const newMessage = await axios.get('');
-      // setMessage(newMessage);
+      const response = await axios.get('https://hv-sb-voting.herokuapp.com/api/message');
+      const newMessage = response.data.data.message;
+      setMessage(newMessage);
+    };
+    const getAllNames = async () => {
+      const response = await axios.get('https://hv-sb-voting.herokuapp.com/api/names');
+      const data = await response.data.data;
+      const filterData = data.filter((person) => person.name !== 'message');
+      const names = filterData.map((person) => person.name);
+      // console.log(names);
+      setAllNames(names);
     };
     fetchMessage();
+    getAllNames();
   }, []);
 
   const handleNameChange = (event) => {
     setFormState({ ...formState, name: event.target.value });
-    console.log(formState.name);
   };
   const handleRatingChange = (event) => {
     setFormState({ ...formState, rating: event.target.value });
-    console.log(formState.rating);
   };
   const handleVote = async () => {
     if (formState.name !== '' && formState.rating !== '') {
@@ -111,7 +119,7 @@ const VotingForm = () => {
           <MenuItem value="">
             <em>-- select one --</em>
           </MenuItem>
-          {names.map((name) => (
+          {allNames.map((name) => (
             <MenuItem value={name.toLowerCase()} key={name} className={classes.selection}>
               {name}
             </MenuItem>

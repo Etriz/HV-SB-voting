@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     minWidth: '65vw',
+    margin: theme.spacing(0, 0, 4),
   },
   inputLabel: {
     textAlign: 'left',
@@ -32,13 +34,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const EMPTY_RATING = { A: 0, B: 0, C: 0, D: 0 };
 
 const AddRemoveForm = () => {
   const classes = useStyles();
 
   const [addForm, setAddForm] = useState('');
-  const [dbAdd] = useState({ name: addForm.toLowerCase(), rating: EMPTY_RATING });
   const [removeForm, setRemoveForm] = useState('');
 
   const handleAddChange = (event) => {
@@ -47,13 +47,15 @@ const AddRemoveForm = () => {
   const handleRemoveChange = (event) => {
     setRemoveForm(event.target.value);
   };
-  const handleAddSubmit = () => {
+  const handleAddSubmit = async () => {
     if (addForm !== '') {
+      await axios.post('https://hv-sb-voting.herokuapp.com/api/names', { name: addForm });
       setAddForm('');
     }
   };
-  const handleRemoveSubmit = () => {
+  const handleRemoveSubmit = async () => {
     if (removeForm !== '') {
+      await axios.delete('https://hv-sb-voting.herokuapp.com/api/names', { name: removeForm });
       setRemoveForm('');
     }
   };

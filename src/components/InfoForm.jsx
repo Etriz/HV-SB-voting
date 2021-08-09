@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -40,9 +41,12 @@ const InfoForm = () => {
   const handleMessageChange = (event) => {
     setFormState(event.target.value);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (formState !== '') {
-      // setMain(formState);
+      await axios.put('https://hv-sb-voting.herokuapp.com/api/message', {
+        name: 'message',
+        message: formState,
+      });
       setFormState('');
     }
   };
