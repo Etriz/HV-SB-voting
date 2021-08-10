@@ -73,10 +73,17 @@ const getMessage = async (req, res) => {
 };
 const updateMessage = async (req, res) => {
   const body = req.body;
-  const message = await Rating.findOne({ name: 'message' });
-  message.message = body.message;
-  await message.save();
-  return res.status(200).json({ success: true, data: message });
+  const { name, message } = body;
+
+  if (!body) {
+    return res.status(400).json({ success: false, error: 'You must provide a message' });
+  }
+  const newMessage = await Rating.findOne({ name: name });
+  newMessage.message = message;
+  await newMessage.save();
+  return res
+    .status(200)
+    .json({ success: true, message: 'Message updated', data: newMessage.message });
 };
 
 module.exports = {

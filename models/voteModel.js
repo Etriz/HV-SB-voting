@@ -8,6 +8,7 @@ const VoteSchema = new mongoose.Schema({
     C: { type: Number },
     D: { type: Number },
   },
+  message: { type: String },
 });
 
 const voteModel = mongoose.model('VoteModel', VoteSchema, 'HV-SB');
