@@ -55,7 +55,9 @@ const AddRemoveForm = () => {
   };
   const handleRemoveSubmit = async () => {
     if (removeForm !== '') {
-      await axios.delete('https://hv-sb-voting.herokuapp.com/api/names', { name: removeForm });
+      await axios.delete('https://hv-sb-voting.herokuapp.com/api/names', {
+        data: { name: removeForm },
+      });
       setRemoveForm('');
     }
   };
