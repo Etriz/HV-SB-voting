@@ -20,8 +20,8 @@ const App = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <TopBar />
       <Router>
+        <TopBar />
         <Route exact path="/">
           <VotingForm />
         </Route>
@@ -31,8 +31,8 @@ const App = () => {
         <Route path="/thanks">
           <Thanks />
         </Route>
+        <Footer />
       </Router>
-      <Footer />
     </div>
   );
 };
