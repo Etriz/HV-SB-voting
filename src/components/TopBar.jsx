@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,12 +28,16 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBar = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <AppBar position="static" className={classes.nav}>
-      <a href="/dashboard">
-        <img src={logo} alt="starbucks logo" className={classes.logo} />
-      </a>
+      <img
+        src={logo}
+        alt="starbucks logo"
+        className={classes.logo}
+        onClick={() => history.push('/dashboard/')}
+      />
       <Typography variant="h4" className={classes.text}>
         Starbucks Voting
       </Typography>
