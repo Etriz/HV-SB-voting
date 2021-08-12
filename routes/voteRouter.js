@@ -18,4 +18,6 @@ router.delete('/names/', VoteController.deleteName);
 router.get('/message/', VoteController.getMessage);
 router.put('/message/', VoteController.updateMessage);
 
+router.delete('/deleteall', VoteController.deleteAll);
+
 module.exports = router;

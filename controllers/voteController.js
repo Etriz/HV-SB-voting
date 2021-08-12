@@ -1,3 +1,4 @@
+const { Model } = require('mongoose');
 const Rating = require('../models/voteModel');
 
 const getAll = async (req, res) => {
@@ -85,6 +86,14 @@ const updateMessage = async (req, res) => {
     .status(200)
     .json({ success: true, message: 'Message updated', data: newMessage.message });
 };
+const deleteAll = async (req, res) => {
+  try {
+    await Rating.deleteMany({ name: { $ne: 'message' } });
+    return res.status(200).json({ success: true, message: 'Everything deleted' });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error });
+  }
+};
 
 module.exports = {
   getAll,
@@ -95,4 +104,5 @@ module.exports = {
   deleteName,
   getMessage,
   updateMessage,
+  deleteAll,
 };
