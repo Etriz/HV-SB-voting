@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(0, 'auto'),
+    margin: theme.spacing(3, 'auto'),
   },
   formControl: {
     minWidth: '65vw',
@@ -49,16 +49,20 @@ const AddRemoveForm = () => {
   };
   const handleAddSubmit = async () => {
     if (addForm !== '') {
-      await axios.post('https://hv-sb-voting.herokuapp.com/api/names', { name: addForm });
+      await axios.post('https://hv-sb-voting.herokuapp.com/api/names', {
+        name: addForm.toLowerCase(),
+      });
       setAddForm('');
+      window.location.reload();
     }
   };
   const handleRemoveSubmit = async () => {
     if (removeForm !== '') {
       await axios.delete('https://hv-sb-voting.herokuapp.com/api/names', {
-        data: { name: removeForm },
+        data: { name: removeForm.toLowerCase() },
       });
       setRemoveForm('');
+      window.location.reload();
     }
   };
 

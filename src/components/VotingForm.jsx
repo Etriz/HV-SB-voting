@@ -70,6 +70,10 @@ const VotingForm = () => {
   const [formState, setFormState] = useState(EMPTY_FORM);
   const [allNames, setAllNames] = useState([]);
 
+  const capitalizeName = (name) => {
+    return name[0].toUpperCase() + name.slice(1);
+  };
+
   useEffect(() => {
     const fetchMessage = async () => {
       const response = await axios.get('https://hv-sb-voting.herokuapp.com/api/message');
@@ -121,7 +125,7 @@ const VotingForm = () => {
           </MenuItem>
           {allNames.map((name) => (
             <MenuItem value={name.toLowerCase()} key={name} className={classes.selection}>
-              {name}
+              {capitalizeName(name)}
             </MenuItem>
           ))}
         </Select>
