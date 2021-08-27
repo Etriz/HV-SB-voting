@@ -69,6 +69,7 @@ const VotingForm = () => {
   const [message, setMessage] = useState('set message here');
   const [formState, setFormState] = useState(EMPTY_FORM);
   const [allNames, setAllNames] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const capitalizeName = (name) => {
     return name[0].toUpperCase() + name.slice(1);
@@ -87,6 +88,7 @@ const VotingForm = () => {
       const names = filterData.map((person) => person.name);
       // console.log(names);
       setAllNames(names);
+      setLoading(false);
     };
     fetchMessage();
     getAllNames();
@@ -106,7 +108,9 @@ const VotingForm = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <FormLoading />
+  ) : (
     <Container className={classes.root}>
       <p>{message}</p>
       <FormControl className={classes.formControl}>
@@ -168,6 +172,17 @@ const VotingForm = () => {
           Vote Now!
         </Button>
       </FormControl>
+    </Container>
+  );
+};
+
+const FormLoading = () => {
+  const classes = useStyles();
+
+  return (
+    <Container className={classes.root}>
+      <h3>Loading ...</h3>
+      <p>Please Wait, This May Take a Moment</p>
     </Container>
   );
 };
